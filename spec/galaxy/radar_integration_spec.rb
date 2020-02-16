@@ -2,30 +2,9 @@ require 'spec_helper'
 
 module Galaxy
   module Invaders
-    RSpec.describe 'Radar' do
-      describe '.window_width / .window_height' do
+    RSpec.describe 'Radar integration' do
+      describe 'radar on using classifier_builder' do
         let(:radar) { Radar.new }
-
-        it 'should return min width/height of window to search for enemy pattern' do
-          expect(Galaxy::Invaders).to receive(:patterns).twice do
-            [
-              ['123', '123', '123'],
-              ['12', '34'],
-              ['12345']
-            ]
-          end
-          expect(radar.window_width).to eq(2)
-          expect(radar.window_height).to eq(1)
-        end
-      end
-
-      describe '.lookup_enemies' do
-        let(:radar) { Radar.new }
-
-        before do
-          classifier = double('classifier', classify: 'enemy')
-          allow(radar).to receive(:classifier) { classifier }
-        end
 
         context 'with radar sample 1' do
           let(:enemies) { radar.lookup_enemies(sample) }
@@ -49,22 +28,10 @@ o-o-----o-o
 
           it 'should respond with 4 coordinates to choose area to destroy' do
             enemy = enemies[0]
-
-            # top-left
-            expect(enemy.area[0].x).to eq(0)
-            expect(enemy.area[0].y).to eq(0)
-
-            # bottom-left
-            expect(enemy.area[1].x).to eq(0)
-            expect(enemy.area[1].y).to eq(7)
-
-            # top-right
-            expect(enemy.area[2].x).to eq(7)
-            expect(enemy.area[2].y).to eq(0)
-
-            # bottom-right
-            expect(enemy.area[3].x).to eq(7)
-            expect(enemy.area[3].y).to eq(7)
+            expect(enemy.area[0]).to eq(Vector2.new(0, 0))
+            expect(enemy.area[1]).to eq(Vector2.new(0, 7))
+            expect(enemy.area[2]).to eq(Vector2.new(7, 0))
+            expect(enemy.area[3]).to eq(Vector2.new(7, 7))
           end # it
         end # context
 

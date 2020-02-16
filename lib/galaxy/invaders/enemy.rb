@@ -1,6 +1,5 @@
 module Galaxy
   module Invaders
-
     Enemy = Struct.new(
       :x0, :y0,
       :x1, :y1,
