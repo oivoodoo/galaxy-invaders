@@ -21,6 +21,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
+    zeitwerk (2.2.2)
 
 PLATFORMS
   ruby
@@ -30,6 +31,7 @@ DEPENDENCIES
   galaxy-invaders!
   rake (~> 10.0)
   rspec
+  zeitwerk
 
 BUNDLED WITH
    2.0.2
