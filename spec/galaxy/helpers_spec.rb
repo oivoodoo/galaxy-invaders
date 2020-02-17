@@ -3,9 +3,9 @@ module Galaxy
     RSpec.describe Helpers do
       subject { Galaxy::Invaders::Helpers }
 
-      describe '.prepare_sample' do
+      describe '.normalize' do
         it 'should clean up empty lines from the sample and make array from multline string' do
-          expect(subject.prepare_sample("\no\n-\n")).to eq([[1], [0]])
+          expect(subject.normalize("\no\n-\n")).to eq([[1], [0]])
         end
       end
     end

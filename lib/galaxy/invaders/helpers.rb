@@ -1,7 +1,7 @@
 module Galaxy
   module Invaders
     module Helpers
-      def self.prepare_sample(sample)
+      def self.normalize(sample)
         sample
           .split("\n")
           .map(&:strip)

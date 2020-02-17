@@ -57,8 +57,8 @@ o-o-o-o-o-o-o
 
     def self.patterns
       [
-        Helpers.prepare_sample(ENEMY_PATTERN_1),
-        Helpers.prepare_sample(ENEMY_PATTERN_2)
+        Helpers.normalize(ENEMY_PATTERN_1),
+        Helpers.normalize(ENEMY_PATTERN_2)
       ]
     end
 
@@ -81,12 +81,12 @@ o-o-o-o-o-o-o
         parameter.c = 10
 
         examples = [
-          Helpers.prepare_sample(ENEMY_PATTERN_1),
-          Helpers.prepare_sample(ENEMY_PATTERN_2),
-          Helpers.prepare_sample(OK_PATTERN_1),
-          Helpers.prepare_sample(OK_PATTERN_2),
-          Helpers.prepare_sample(OK_PATTERN_3),
-          Helpers.prepare_sample(OK_PATTERN_4)
+          Helpers.normalize(ENEMY_PATTERN_1),
+          Helpers.normalize(ENEMY_PATTERN_2),
+          Helpers.normalize(OK_PATTERN_1),
+          Helpers.normalize(OK_PATTERN_2),
+          Helpers.normalize(OK_PATTERN_3),
+          Helpers.normalize(OK_PATTERN_4)
         ].map { |ary| Libsvm::Node.features(ary.flatten) }
         labels = [
           ENEMY_CLASS,

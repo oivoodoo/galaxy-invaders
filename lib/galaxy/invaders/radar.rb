@@ -11,7 +11,7 @@ module Galaxy
       end
 
       def lookup_enemies(sample)
-        sample = Helpers.prepare_sample(sample)
+        sample = Helpers.normalize(sample)
 
         if sample.size < window_height
           if enemy?(sample)

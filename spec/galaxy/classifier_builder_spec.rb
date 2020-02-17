@@ -11,7 +11,7 @@ module Galaxy
         end
 
         it 'should return enemy or not_enemy' do
-          sample = Helpers.prepare_sample(Galaxy::Invaders::ENEMY_PATTERN_1)
+          sample = Helpers.normalize(Galaxy::Invaders::ENEMY_PATTERN_1)
           expect(instance.classify(sample)).to eq(1)
 
           not_enemy_sample = %q{
@@ -22,7 +22,7 @@ module Galaxy
 ---------------
 ---------------
           }
-          sample = Helpers.prepare_sample(not_enemy_sample)
+          sample = Helpers.normalize(not_enemy_sample)
           expect(instance.classify(sample)).to eq(0)
         end
       end
