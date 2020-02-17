@@ -1,4 +1,4 @@
-require 'classifier-reborn'
+require 'libsvm'
 
 module Galaxy
   module Invaders
@@ -22,6 +22,38 @@ oooooooo
 -o-oo-o-
 o-o--o-o
     }
+    OK_PATTERN_1 = %q{
+-o-----oo----
+-o--------o--
+------------o
+-------------
+------------o
+---o-o-------
+}
+    OK_PATTERN_2 = %q{
+-------------
+-------------
+-------------
+-------------
+-------------
+-------------
+}
+    OK_PATTERN_3 = %q{
+ooooooooooooo
+ooooooooooooo
+ooooooooooooo
+ooooooooooooo
+ooooooooooooo
+ooooooooooooo
+}
+    OK_PATTERN_4 = %q{
+o-o-o-o-o-o-o
+-------------
+o-o-o-o-o-o-o
+-------------
+o-o-o-o-o-o-o
+-------------
+}
 
     def self.patterns
       [
@@ -30,33 +62,36 @@ o-o--o-o
       ]
     end
 
+    Classifier = Struct.new(:model) do
+      def classify(data)
+        model.predict(Libsvm::Node.features(data.flatten)).to_i
+      end
+    end
+
     class ClassifierBuilder
       def self.build
-        classifier = ClassifierReborn::Bayes.new(:enemy, :not_enemy)
-        classifier.train(:enemy, ENEMY_PATTERN_1)
-        classifier.train(:enemy, ENEMY_PATTERN_2)
+        problem = Libsvm::Problem.new
+        parameter = Libsvm::SvmParameter.new
 
-        # let's put some examples that's definitely our enemies,
-        # it could be noise.
-        classifier.train :not_enemy,
-          %q{
--o-----oo----
--o--------o--
-------------o
--------------
-------------o
----o-o-------
-          }
-        classifier.train :not_enemy,
-          %q{
-o--------o--o--
----------------
----o--o-oo--o--
-oo-----o----o--
---------o--o---
--o--------o-o--
-          }
+        parameter.cache_size = 1 # in megabytes
+        parameter.eps = 0.001
+        parameter.c = 10
 
+        examples = [
+          Helpers.prepare_sample(ENEMY_PATTERN_1),
+          Helpers.prepare_sample(ENEMY_PATTERN_2),
+          Helpers.prepare_sample(OK_PATTERN_1),
+          Helpers.prepare_sample(OK_PATTERN_2),
+          Helpers.prepare_sample(OK_PATTERN_3),
+          Helpers.prepare_sample(OK_PATTERN_4)
+        ].map { |ary| Libsvm::Node.features(ary.flatten) }
+        labels = [1, 1, 0, 0, 0, 0]
+
+        problem.set_examples(labels, examples)
+
+        model = Libsvm::Model.train(problem, parameter)
+
+        classifier = Classifier.new(model)
         classifier
       end
     end

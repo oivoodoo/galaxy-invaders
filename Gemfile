@@ -3,7 +3,7 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in galaxy-invaders.gemspec
 gemspec
 
-gem 'classifier-reborn'
+gem 'rb-libsvm'
 
 group :test do
   gem 'rspec'

@@ -6,7 +6,7 @@ module Galaxy
       end
 
       def enemy?(window_entry)
-        classified = classifier.classify(Helpers.stringify(window_entry))
+        classified = classifier.classify(window_entry)
         classified == 'enemy'
       end
 

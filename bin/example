@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+fixtures_path = File.expand_path(File.join("..", "spec", "fixtures"), __dir__)
+
+require 'bundler/setup'
+require 'galaxy/invaders'
+
+def draw(sample, area)
+  sample = Galaxy::Invaders::Helpers.prepare_sample(sample)
+  monster = sample[area[0].x..area[3].x].map { |row| row[area[0].y..area[3].y] }
+  monster.join("\n")
+end
+
+sample = File.read(File.join(fixtures_path, "sample01.txt"))
+radar = Galaxy::Invaders::Radar.new
+
+enemies = radar.lookup_enemies(sample)
+enemies.each_with_index do |enemy, i|
+  puts "============= Enemy #{i + 1} ================"
+  puts(enemy.area)
+  puts(draw(sample, enemy.area))
+end
