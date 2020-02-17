@@ -28,10 +28,10 @@ o-o-----o-o
 
           it 'should respond with 4 coordinates to choose area to destroy' do
             enemy = enemies[0]
-            expect(enemy.area[0]).to eq(Vector2.new(0, 0))
-            expect(enemy.area[1]).to eq(Vector2.new(0, 7))
+            expect(enemy.area[0]).to eq(Vector2.new(0, 1))
+            expect(enemy.area[1]).to eq(Vector2.new(0, 8))
             expect(enemy.area[2]).to eq(Vector2.new(7, 0))
-            expect(enemy.area[3]).to eq(Vector2.new(7, 7))
+            expect(enemy.area[3]).to eq(Vector2.new(7, 8))
           end # it
         end # context
 
