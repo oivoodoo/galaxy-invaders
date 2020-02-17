@@ -23,7 +23,8 @@ module Galaxy
         let(:radar) { Radar.new }
 
         before do
-          classifier = double('classifier', classify: 'enemy')
+          classifier = double(
+            'classifier', classify: Galaxy::Invaders::ENEMY_CLASS)
           allow(radar).to receive(:classifier) { classifier }
         end
 
@@ -48,6 +49,8 @@ o-o-----o-o
           end
 
           it 'should respond with 4 coordinates to choose area to destroy' do
+            expect(enemies.size).to eq(1)
+
             enemy = enemies[0]
 
             # top-left
@@ -89,6 +92,8 @@ o-o--o-o---oo-oo---
           end
 
           it 'should respond with 4 coordinates to choose area to destroy' do
+            expect(enemies.size).to eq(2)
+
             enemy = enemies[0]
             expect(enemy.area[0]).to eq(Vector2.new(0, 0))
             expect(enemy.area[1]).to eq(Vector2.new(0, 7))

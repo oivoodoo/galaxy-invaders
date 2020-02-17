@@ -62,6 +62,9 @@ o-o-o-o-o-o-o
       ]
     end
 
+    NOT_ENEMY_CLASS = 0
+    ENEMY_CLASS = 1
+
     Classifier = Struct.new(:model) do
       def classify(data)
         model.predict(Libsvm::Node.features(data.flatten)).to_i
@@ -85,7 +88,14 @@ o-o-o-o-o-o-o
           Helpers.prepare_sample(OK_PATTERN_3),
           Helpers.prepare_sample(OK_PATTERN_4)
         ].map { |ary| Libsvm::Node.features(ary.flatten) }
-        labels = [1, 1, 0, 0, 0, 0]
+        labels = [
+          ENEMY_CLASS,
+          ENEMY_CLASS,
+          NOT_ENEMY_CLASS,
+          NOT_ENEMY_CLASS,
+          NOT_ENEMY_CLASS,
+          NOT_ENEMY_CLASS
+        ]
 
         problem.set_examples(labels, examples)
 

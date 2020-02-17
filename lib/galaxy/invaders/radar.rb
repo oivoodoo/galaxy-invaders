@@ -7,7 +7,7 @@ module Galaxy
 
       def enemy?(window_entry)
         classified = classifier.classify(window_entry)
-        classified == 'enemy'
+        classified == Galaxy::Invaders::ENEMY_CLASS
       end
 
       def lookup_enemies(sample)
