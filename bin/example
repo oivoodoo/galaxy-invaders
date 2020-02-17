@@ -6,7 +6,10 @@ require 'bundler/setup'
 require 'galaxy/invaders'
 
 def draw(sample, area)
-  sample = Galaxy::Invaders::Helpers.prepare_sample(sample)
+  sample = sample
+    .split("\n")
+    .map(&:strip)
+    .select { |line| !line.nil? && line != '' }
   monster = sample[area[0].x..area[3].x].map { |row| row[area[0].y..area[3].y] }
   monster.join("\n")
 end
